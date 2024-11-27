@@ -3,20 +3,22 @@ use std::fmt::{Debug, Display};
 
 pub type Day = usize;
 pub type Part = usize;
-pub type SolverMap = HashMap<(Day, Part), Box<dyn Fn(&PuzzleInput<'_>) -> Option<String>>>;
+pub type SolverMap = HashMap<(Day, Part), Box<dyn Fn(&PuzzleInput) -> Option<String>>>;
+
+pub const CURRENT_YEAR: u32 = 2023;
 
 #[macro_export]
 macro_rules! solution {
     ($day:literal) => {
-        use crate::aoc::{Lines, PuzzleInput};
         use std::fmt::{Debug, Display};
+        use $crate::aoc::{Lines, PuzzleInput};
 
-        impl<'a> Solver<$day, 1> for PuzzleInput<'a> {
+        impl Solver<$day, 1> for PuzzleInput {
             fn solve(&self) -> Option<impl Display + Debug> {
                 None as Option<String>
             }
         }
-        impl<'a> Solver<$day, 2> for PuzzleInput<'a> {
+        impl Solver<$day, 2> for PuzzleInput {
             fn solve(&self) -> Option<impl Display + Debug> {
                 None as Option<String>
             }
@@ -25,12 +27,12 @@ macro_rules! solution {
     ($day:literal, $part_1_solver:ident) => {
         use std::fmt::{Debug, Display};
 
-        impl<'a> Solver<$day, 1> for PuzzleInput<'a> {
+        impl Solver<$day, 1> for PuzzleInput {
             fn solve(&self) -> Option<impl Display + Debug> {
                 Some($part_1_solver(self))
             }
         }
-        impl<'a> Solver<$day, 2> for PuzzleInput<'a> {
+        impl Solver<$day, 2> for PuzzleInput {
             fn solve(&self) -> Option<impl Display + Debug> {
                 None as Option<String>
             }
@@ -39,12 +41,12 @@ macro_rules! solution {
     ($day:literal, $part_1_solver:ident, $part_2_solver:ident) => {
         use std::fmt::{Debug, Display};
 
-        impl<'a> Solver<$day, 1> for PuzzleInput<'a> {
+        impl Solver<$day, 1> for PuzzleInput {
             fn solve(&self) -> Option<impl Display + Debug> {
                 Some($part_1_solver(self))
             }
         }
-        impl<'a> Solver<$day, 2> for PuzzleInput<'a> {
+        impl Solver<$day, 2> for PuzzleInput {
             fn solve(&self) -> Option<impl Display + Debug> {
                 Some($part_2_solver(self))
             }
@@ -52,42 +54,65 @@ macro_rules! solution {
     };
 }
 
+#[allow(clippy::test_attr_in_doctest)]
+/// Declare a test to run a part
+///
+/// Usage:
+/// ```rust
+/// fn part_1(input: impl Lines) -> u64 {
+///     // implementation
+///     3159281
+/// }
+///
+/// solution!(24, part_1)
+///
+/// #[test]
+/// fn test_part_1() {
+///     aoc_test!(24, 1, 3159281, "8172638174891\n19294378171");
+/// }
+/// ```
 #[macro_export]
 macro_rules! aoc_test {
     ($day:literal, $part:literal, $expected:expr, $content:expr) => {
         let input: PuzzleInput = $content.into();
-        let result = <PuzzleInput<'_> as Solver<$day, $part>>::solve(&input)
+        let result = <PuzzleInput as Solver<$day, $part>>::solve(&input)
             .expect("no result")
             .to_string();
         assert_eq!(result, $expected.to_string());
     };
 }
 
-pub struct PuzzleInput<'a> {
-    lines: Vec<&'a str>,
+pub struct PuzzleInput {
+    lines: Vec<String>,
 }
 
 pub trait Lines {
-    fn get_lines(&self) -> impl Iterator<Item=&str>;
+    fn get_lines(&self) -> impl Iterator<Item = &str>;
 }
 
-impl<'a> Lines for PuzzleInput<'a> {
-    fn get_lines(&self) -> impl Iterator<Item=&str> {
-        self.lines.iter().copied()
+impl Lines for PuzzleInput {
+    fn get_lines(&self) -> impl Iterator<Item = &str> {
+        self.lines.iter().map(|s| s.as_str())
     }
 }
 
-impl<'a> Lines for &PuzzleInput<'a> {
-    fn get_lines(&self) -> impl Iterator<Item=&str> {
-        self.lines.iter().copied()
+impl Lines for &PuzzleInput {
+    fn get_lines(&self) -> impl Iterator<Item = &str> {
+        self.lines.iter().map(|s| s.as_str())
     }
 }
 
-impl<'a> From<&'a str> for PuzzleInput<'a> {
+impl<'a> From<&'a str> for PuzzleInput {
     fn from(value: &'a str) -> Self {
         Self {
-            lines: value.lines().map(|s| s.trim()).collect(),
+            lines: value.lines().map(|s| s.trim().to_owned()).collect(),
         }
+    }
+}
+
+impl From<Vec<String>> for PuzzleInput {
+    fn from(value: Vec<String>) -> Self {
+        Self { lines: value }
     }
 }
 
@@ -96,18 +121,22 @@ pub trait Solver<const D: usize, const P: usize> {
 }
 
 pub trait PuzzleSource {
-    fn get_input(&self, day: usize, part: usize) -> PuzzleInput;
+    fn get_input(&self, day: Day) -> Result<PuzzleInput, Box<dyn std::error::Error>>;
 }
 
-pub struct MockedPuzzleSource {}
+pub struct FixedDataSource {
+    pub lines: Vec<String>,
+}
 
-impl PuzzleSource for MockedPuzzleSource {
-    fn get_input(&self, _day: usize, _part: usize) -> PuzzleInput {
-        PuzzleInput { lines: vec![] }
+impl PuzzleSource for FixedDataSource {
+    fn get_input(&self, _day: Day) -> Result<PuzzleInput, Box<dyn std::error::Error>> {
+        Ok(PuzzleInput {
+            lines: self.lines.clone(),
+        })
     }
 }
 
-pub fn get_days_iter() -> impl Iterator<Item=Day> {
+pub fn get_days_iter() -> impl Iterator<Item = Day> {
     1..=25
 }
 

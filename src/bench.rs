@@ -54,7 +54,7 @@ impl Display for BenchmarkResults {
                 format_memory(peak_bytes),
             )
         } else {
-            write!(f, "{} ({iter})", format_duration(self.average_duration), )
+            write!(f, "{} ({iter})", format_duration(self.average_duration),)
         }
     }
 }
@@ -99,8 +99,10 @@ pub(crate) fn benchmark<T, F: Fn() -> Option<T>>(
             peak_memory: used_mem,
         })
     } else {
-        let project_runs = TARGET_DURATION_PER_PART.as_micros() / first_run_duration.as_micros();
-        let iterations = min(MAX_RUNS as u128, project_runs) as usize;
+        let project_runs = (TARGET_DURATION_PER_PART.as_secs_f64()
+            / first_run_duration.as_secs_f64())
+        .ceil() as usize;
+        let iterations = min(MAX_RUNS, project_runs);
 
         let start = Instant::now();
         for _ in 0..iterations {

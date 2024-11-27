@@ -35,8 +35,6 @@ fn main() {
     let out_dir = std::env::var("OUT_DIR").unwrap();
     let dest_path = Path::new(&out_dir).join("solved_days.rs");
 
-    println!("cargo::warning={:?}", out_dir);
-
     let generated_code = generate_static_hashmap(solved_days);
 
     // Write the generated code to the output file.
@@ -44,26 +42,22 @@ fn main() {
 }
 
 fn generate_static_hashmap(days: Vec<usize>) -> String {
-    let map_type = quote! {
-        HashMap<(usize, usize), Box<dyn Fn(&PuzzleInput<'_>) -> Option<String>>>
-    };
-
     let hashmap_code = quote! {
         use std::collections::HashMap;
-        use crate::aoc::{PuzzleInput, Solver};
+        use crate::aoc::{PuzzleInput, Solver, SolverMap};
 
-        pub fn get_solvers() -> #map_type {
-            let mut map: #map_type = HashMap::new();
+        pub fn get_solvers() -> SolverMap {
+            let mut map: SolverMap = HashMap::new();
             #(map.insert(
                 (#days, 1),
                 Box::new(
-                    |input| <PuzzleInput<'_> as Solver<#days, 1>>::solve(input).map(|solution| solution.to_string())
+                    |input| <PuzzleInput as Solver<#days, 1>>::solve(input).map(|solution| solution.to_string())
                 )
             );)*
             #(map.insert(
                 (#days, 2),
                 Box::new(
-                    |input| <PuzzleInput<'_> as Solver<#days, 2>>::solve(input).map(|solution| solution.to_string())
+                    |input| <PuzzleInput as Solver<#days, 2>>::solve(input).map(|solution| solution.to_string())
                 )
             );)*
             map
