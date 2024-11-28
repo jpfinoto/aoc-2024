@@ -18,6 +18,12 @@ puzzle inputs. You can get this from the session token while logged in on the we
 
 To update the benchmark, run `cargo run --release bench`.
 
+The benchmark runs the solution function for each part of each day, one after the other, and measures the average
+execution time and the peak heap usage.
+
+Heap usage is measured on the first call to each solver, so if you have some kind of `lazy_static` that gets allocated
+on the first run it will be measured!
+
 <!---BENCH_START--->
 
 Benchmark CPU: **AMD Ryzen 9 7950X3D 16-Core Processor @ 4201 MHz**
