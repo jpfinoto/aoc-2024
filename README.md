@@ -2,6 +2,11 @@
 
 An overcomplicated setup for getting inputs and benchmarking the solutions!
 
+# Setup
+
+You need to create a file called `token.txt` in the root of this repo with your API key to be able to download
+puzzle inputs. You can get this from the session token while logged in on the website.
+
 # Solving
 
 - Create a solution with the format `day{n:02}.rs` in the `src/solutions` folder
