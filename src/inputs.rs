@@ -99,7 +99,7 @@ impl PuzzleSource for CachedOnlinePuzzleSource {
         let path = self.get_day_path(day);
 
         if let Ok(contents) = std::fs::read_to_string(path.clone()) {
-            log::debug!(
+            log::trace!(
                 "reading cached input for day {day} at {}",
                 path.to_str().unwrap()
             );

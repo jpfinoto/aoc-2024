@@ -1,4 +1,3 @@
-#[cfg(feature = "benchmark_memory")]
 use crate::PEAK_ALLOC;
 use std::cmp::min;
 use std::fmt::{Display, Formatter};
@@ -7,11 +6,11 @@ use std::time::{Duration, Instant};
 const TARGET_DURATION_PER_PART: Duration = Duration::from_secs(1);
 const MAX_RUNS: usize = 1_000_000;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub(crate) struct BenchmarkResults {
     pub iterations: usize,
     pub average_duration: Duration,
-    pub peak_memory: PeakMemoryUsage,
+    pub peak_memory: usize,
 }
 
 pub fn format_duration(duration: Duration) -> String {
@@ -45,26 +44,16 @@ impl Display for BenchmarkResults {
             1 => "1 iteration".to_string(),
             n => format!("{} iterations", n),
         };
-
-        if let PeakMemoryUsage::Bytes(peak_bytes) = self.peak_memory {
-            write!(
-                f,
-                "{} / {} peak ({iter})",
-                format_duration(self.average_duration),
-                format_memory(peak_bytes),
-            )
-        } else {
-            write!(f, "{} ({iter})", format_duration(self.average_duration),)
-        }
+        
+        write!(
+            f,
+            "{} / {} peak ({iter})",
+            format_duration(self.average_duration),
+            format_memory(self.peak_memory),
+        )
     }
 }
 
-#[allow(dead_code)]
-#[derive(Debug, Eq, PartialEq)]
-pub(crate) enum PeakMemoryUsage {
-    Bytes(usize),
-    Disabled,
-}
 
 pub(crate) fn benchmark<T, F: Fn() -> Option<T>>(
     bench_fn: F,
@@ -72,9 +61,7 @@ pub(crate) fn benchmark<T, F: Fn() -> Option<T>>(
     let start = Instant::now();
 
     // prepare stats
-    #[cfg(feature = "benchmark_memory")]
     PEAK_ALLOC.reset_peak_usage();
-    #[cfg(feature = "benchmark_memory")]
     let initial_mem = PEAK_ALLOC.current_usage();
 
     // run the function to get an idea of how long it takes
@@ -84,13 +71,8 @@ pub(crate) fn benchmark<T, F: Fn() -> Option<T>>(
     // stop timer and count memory usage
     let first_run_duration = start.elapsed();
 
-    #[cfg(feature = "benchmark_memory")]
     let peak_mem = PEAK_ALLOC.peak_usage();
-    #[cfg(feature = "benchmark_memory")]
-    let used_mem = PeakMemoryUsage::Bytes(peak_mem - initial_mem);
-
-    #[cfg(not(feature = "benchmark_memory"))]
-    let used_mem = PeakMemoryUsage::Disabled;
+    let used_mem = peak_mem - initial_mem;
 
     if first_run_duration > TARGET_DURATION_PER_PART {
         Ok(BenchmarkResults {
@@ -174,16 +156,10 @@ mod tests {
         assert_eq!(Some(BenchmarkError::NotImplemented), bench.err());
     }
 
-    #[cfg(feature = "benchmark_memory")]
     #[test]
     fn test_benchmark_memory_intensive_solver() {
         let bench = benchmark(memory_intensive_solver);
         assert!(bench.is_ok());
-
-        let PeakMemoryUsage::Bytes(used_mem) = bench.unwrap().peak_memory else {
-            panic!()
-        };
-
-        assert!(used_mem > 10000);
+        assert!(bench.unwrap().peak_memory > 10000);
     }
 }

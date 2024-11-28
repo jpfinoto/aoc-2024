@@ -9,7 +9,7 @@ pub const CURRENT_YEAR: u32 = 2023;
 
 #[macro_export]
 macro_rules! solution {
-    ($day:literal) => {
+    ($day:expr) => {
         use std::fmt::{Debug, Display};
         use $crate::aoc::{Lines, PuzzleInput};
 
@@ -24,7 +24,7 @@ macro_rules! solution {
             }
         }
     };
-    ($day:literal, $part_1_solver:ident) => {
+    ($day:expr, $part_1_solver:ident) => {
         use std::fmt::{Debug, Display};
 
         impl Solver<$day, 1> for PuzzleInput {
@@ -38,7 +38,7 @@ macro_rules! solution {
             }
         }
     };
-    ($day:literal, $part_1_solver:ident, $part_2_solver:ident) => {
+    ($day:expr, $part_1_solver:ident, $part_2_solver:ident) => {
         use std::fmt::{Debug, Display};
 
         impl Solver<$day, 1> for PuzzleInput {
@@ -73,7 +73,7 @@ macro_rules! solution {
 /// ```
 #[macro_export]
 macro_rules! aoc_test {
-    ($day:literal, $part:literal, $expected:expr, $content:expr) => {
+    ($day:expr, $part:literal, $expected:expr, $content:expr) => {
         let input: PuzzleInput = $content.into();
         let result = <PuzzleInput as Solver<$day, $part>>::solve(&input)
             .expect("no result")

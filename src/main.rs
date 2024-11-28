@@ -1,19 +1,19 @@
 pub mod aoc;
 pub mod bench;
 pub mod inputs;
+mod readme;
 pub mod solutions;
 
 use crate::aoc::{get_days_iter, Day, Part, PuzzleSource, SolverMap};
 use crate::bench::{benchmark, BenchmarkResults};
 use crate::inputs::CachedOnlinePuzzleSource;
+use crate::readme::update_readme;
 use crate::solutions::get_solvers;
 use clap::{arg, command, Command};
-#[cfg(feature = "benchmark_memory")]
 use peak_alloc::PeakAlloc;
 use std::collections::HashMap;
 use std::iter;
 
-#[cfg(feature = "benchmark_memory")]
 #[global_allocator]
 pub static PEAK_ALLOC: PeakAlloc = PeakAlloc;
 
@@ -41,15 +41,20 @@ fn main() -> Result<(), String> {
         .get_matches();
 
     if let Some(bench_args) = matches.subcommand_matches("bench") {
-        if let Some(day) = bench_args.get_one("day") {
-            run_benchmarks(&solvers, &puzzle_source, iter::once(*day));
+        if let Some(day) = bench_args.get_one::<String>("day") {
+            run_benchmarks(
+                &solvers,
+                &puzzle_source,
+                iter::once(day.parse::<Day>().unwrap()),
+            );
         } else {
-            run_benchmarks(&solvers, &puzzle_source, get_days_iter());
+            let results = run_benchmarks(&solvers, &puzzle_source, get_days_iter());
+            update_readme(&results);
         }
         Ok(())
     } else if let Some(solve_args) = matches.subcommand_matches("solve") {
-        if let Some(day) = solve_args.get_one("day") {
-            solve_one(&solvers, &puzzle_source, *day)
+        if let Some(day) = solve_args.get_one::<String>("day") {
+            solve_one(&solvers, &puzzle_source, day.parse::<Day>().unwrap())
         } else {
             solve_latest(&solvers, &puzzle_source)
         }
@@ -108,7 +113,9 @@ fn run_benchmarks(
     solver_map: &SolverMap,
     puzzle_source: &impl PuzzleSource,
     days: impl Iterator<Item = Day>,
-) {
+) -> BenchmarkMap {
+    let mut all_results = HashMap::new();
+
     for day in days {
         let mut part_bench: BenchmarkMap = HashMap::new();
         let input = puzzle_source
@@ -124,6 +131,9 @@ fn run_benchmarks(
                 }
             }
         }
+
+        all_results.extend(part_bench.clone());
+
         if !part_bench.is_empty() {
             log::info!(
                 "Day {day}: \n - part 1: {}\n - part 2: {} ",
@@ -138,4 +148,6 @@ fn run_benchmarks(
             );
         }
     }
+
+    all_results
 }

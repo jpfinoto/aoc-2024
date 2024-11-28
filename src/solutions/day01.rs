@@ -1,18 +1,17 @@
 use crate::aoc::*;
 use crate::solution;
-use itertools::Itertools;
 
-fn get_number_simple(line: &str) -> u32 {
-    let digits = line.chars().filter_map(|c| c.to_digit(10)).collect_vec();
+const DAY: Day = 1;
 
-    digits.first().unwrap() * 10 + digits.last().unwrap()
+solution!(DAY, solve_part_1, solve_part_2);
+
+fn solve_part_1(_input: impl Lines) -> u32 {
+    0
 }
 
-fn solve_part_1(input: impl Lines) -> u32 {
-    input.get_lines().map(get_number_simple).sum()
+fn solve_part_2(_input: impl Lines) -> u32 {
+    0
 }
-
-solution!(1, solve_part_1);
 
 #[cfg(test)]
 mod tests {
@@ -21,14 +20,11 @@ mod tests {
 
     #[test]
     fn test_part_1() {
-        aoc_test!(
-            1,
-            1,
-            142,
-            "1abc2
-pqr3stu8vwx
-a1b2c3d4e5f
-treb7uchet"
-        );
+        aoc_test!(DAY, 1, 0, "");
+    }
+
+    #[test]
+    fn test_part_2() {
+        aoc_test!(DAY, 1, 0, "");
     }
 }
