@@ -5,7 +5,7 @@ pub type Day = usize;
 pub type Part = usize;
 pub type SolverMap = HashMap<(Day, Part), Box<dyn Fn(&PuzzleInput) -> Option<String>>>;
 
-pub const CURRENT_YEAR: u32 = 2023;
+pub const CURRENT_YEAR: u32 = 2024;
 
 #[macro_export]
 macro_rules! solution {
