@@ -1,7 +1,7 @@
 use crate::aoc::*;
 use crate::solution;
 use itertools::Itertools;
-use std::collections::HashMap;
+use std::iter;
 
 const DAY: Day = 1;
 
@@ -31,10 +31,7 @@ fn solve_part_1(input: impl Lines) -> i32 {
 
 fn solve_part_2(input: impl Lines) -> i32 {
     let (a, b) = read_columns(input);
-    let counts = b.iter().fold(HashMap::new(), |mut counts, w| {
-        counts.entry(*w).and_modify(|v| *v += 1).or_insert(1);
-        counts
-    });
+    let counts = b.iter().zip(iter::repeat(1)).into_grouping_map().sum();
     a.iter().map(|v| v * counts.get(v).unwrap_or(&0)).sum()
 }
 
