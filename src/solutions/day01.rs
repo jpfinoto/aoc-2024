@@ -8,20 +8,14 @@ const DAY: Day = 1;
 solution!(DAY, solve_part_1, solve_part_2);
 
 fn read_columns(input: impl Lines) -> (Vec<i32>, Vec<i32>) {
-    let mut a = vec![];
-    let mut b = vec![];
-
-    input
+    let (a, b) = input
         .get_lines()
         .flat_map(|l| {
             l.split_whitespace()
-                .filter_map(|w| w.parse::<i32>().ok())
+                .map(|w| w.parse::<i32>().unwrap())
                 .next_tuple()
         })
-        .for_each(|(left, right)| {
-            a.push(left);
-            b.push(right);
-        });
+        .unzip();
 
     (a, b)
 }
@@ -49,33 +43,21 @@ mod tests {
     use super::*;
     use crate::aoc_test;
 
-    #[test]
-    fn test_part_1() {
-        aoc_test!(
-            DAY,
-            1,
-            11,
-            "3   4
+    const TEST_INPUT: &str = "
+3   4
 4   3
 2   5
 1   3
 3   9
-3   3"
-        );
+3   3";
+
+    #[test]
+    fn test_part_1() {
+        aoc_test!(DAY, 1, 11, TEST_INPUT);
     }
 
     #[test]
     fn test_part_2() {
-        aoc_test!(
-            DAY,
-            2,
-            31,
-            "3   4
-4   3
-2   5
-1   3
-3   9
-3   3"
-        );
+        aoc_test!(DAY, 2, 31, TEST_INPUT);
     }
 }
