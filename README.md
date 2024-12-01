@@ -2,35 +2,17 @@
 
 An overcomplicated setup for getting inputs and benchmarking the solutions!
 
-# Setup
-
-You need to create a file called `token.txt` in the root of this repo with your API key to be able to download
-puzzle inputs. You can get this from the session token while logged in on the website.
-
-# Solving
-
-- Create a solution with the format `day{n:02}.rs` in the `src/solutions` folder
-- Use the `solution!()` macro to declare solutions. See the template at the end of the readme.
-- Use `cargo run` to solve the latest solved day
-- Alternatively, use `cargo run solve <day>` to solve a specific day.
-
-# Benchmarks
-
-To update the benchmark, run `cargo run --release bench`.
-
-The benchmark runs the solution function for each part of each day, one after the other, and measures the average
-execution time and the peak heap usage.
-
-Heap usage is measured on the first call to each solver, so if you have some kind of `lazy_static` that gets allocated
-on the first run it will be measured!
+# Results
 
 <!---BENCH_START--->
 
 Benchmark CPU: **AMD Ryzen 9 7950X3D 16-Core Processor @ 4201 MHz**
 
+`|##------------------------------------------------| 2/50 stars`
+
 | Day | Part 1          | Part 2          |
 |-----|-----------------|-----------------|
-| 01  | 34.2µs / 68 KiB | 57.3µs / 21 KiB |
+| 01  | 34.1µs / 68 KiB | 55.4µs / 21 KiB |
 | 02  | -               | -               |
 | 03  | -               | -               |
 | 04  | -               | -               |
@@ -57,6 +39,28 @@ Benchmark CPU: **AMD Ryzen 9 7950X3D 16-Core Processor @ 4201 MHz**
 | 25  | -               | -               |
 
 <!---BENCH_END--->
+
+# Setup
+
+You need to create a file called `token.txt` in the root of this repo with your API key to be able to download
+puzzle inputs. You can get this from the session token while logged in on the website.
+
+# Solving
+
+- Create a solution with the format `day{n:02}.rs` in the `src/solutions` folder
+- Use the `solution!()` macro to declare solutions. See the template at the end of the readme.
+- Use `cargo run` to solve the latest solved day
+- Alternatively, use `cargo run solve <day>` to solve a specific day.
+
+# Benchmarks
+
+To update the benchmark, run `cargo run --release bench`.
+
+The benchmark runs the solution function for each part of each day, one after the other, and measures the average
+execution time and the peak heap usage.
+
+Heap usage is measured on the first call to each solver, so if you have some kind of `lazy_static` that gets allocated
+on the first run it will be measured!
 
 # Day Template
 
