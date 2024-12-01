@@ -11,6 +11,7 @@ use crate::readme::update_readme;
 use crate::solutions::get_solvers;
 use clap::{arg, command, Command};
 use peak_alloc::PeakAlloc;
+use std::cell::LazyCell;
 use std::collections::HashMap;
 use std::iter;
 
@@ -118,9 +119,11 @@ fn run_benchmarks(
 
     for day in days {
         let mut part_bench: BenchmarkMap = HashMap::new();
-        let input = puzzle_source
-            .get_input(day)
-            .expect("failed to get puzzle input");
+        let input = LazyCell::new(|| {
+            puzzle_source
+                .get_input(day)
+                .expect("failed to get puzzle input")
+        });
         for part in 1..=2 as Part {
             if let Some(solver) = solver_map.get(&(day, part)) {
                 let bench = benchmark(|| solver(&input));
