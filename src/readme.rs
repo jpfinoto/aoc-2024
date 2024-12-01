@@ -53,7 +53,7 @@ fn format_table<const N: usize>(
     iter::once(format_row(headers, &column_widths))
         .chain(iter::once(format!(
             "|{}|",
-            column_widths.map(|n| repeat_string("-", n + 2)).join("|")
+            column_widths.map(|n| "-".repeat(n + 2)).join("|")
         )))
         .chain(lines.iter().map(|line| format_row(line, &column_widths)))
         .join("\n")
@@ -91,8 +91,7 @@ pub fn update_readme(results: &BenchmarkMap) {
     let sys_info = format!("Benchmark CPU: **{proc_info}**");
     let bench = format!("{sys_info}\n\n{star_road}\n\n{table_entries}");
 
-    let updated_content =
-        format!("{start}{MARKER_START}\n\n{bench}\n\n{MARKER_END}{footer}");
+    let updated_content = format!("{start}{MARKER_START}\n\n{bench}\n\n{MARKER_END}{footer}");
 
     std::fs::write(&readme_path, &updated_content).unwrap();
 }
@@ -100,11 +99,7 @@ pub fn update_readme(results: &BenchmarkMap) {
 fn get_star_road(current_stars: usize, total_stars: usize) -> String {
     format!(
         "`|{}{}| {current_stars}/{total_stars} stars`",
-        repeat_string("#", current_stars),
-        repeat_string("-", total_stars - current_stars)
+        "#".repeat(current_stars),
+        "-".repeat(total_stars - current_stars)
     )
-}
-
-fn repeat_string(s: impl AsRef<str>, n: usize) -> String {
-    iter::repeat_n(s.as_ref(), n).join("")
 }
