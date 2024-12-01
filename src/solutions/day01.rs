@@ -1,16 +1,47 @@
 use crate::aoc::*;
 use crate::solution;
+use itertools::Itertools;
+use std::collections::HashMap;
 
 const DAY: Day = 1;
 
 solution!(DAY, solve_part_1, solve_part_2);
 
-fn solve_part_1(_input: impl Lines) -> u32 {
-    0
+fn read_columns(input: impl Lines) -> (Vec<i32>, Vec<i32>) {
+    let mut a = vec![];
+    let mut b = vec![];
+
+    input
+        .get_lines()
+        .flat_map(|l| {
+            l.split_whitespace()
+                .filter_map(|w| w.parse::<i32>().ok())
+                .next_tuple()
+        })
+        .for_each(|(left, right)| {
+            a.push(left);
+            b.push(right);
+        });
+
+    (a, b)
 }
 
-fn solve_part_2(_input: impl Lines) -> u32 {
-    0
+fn solve_part_1(_input: impl Lines) -> i32 {
+    let (a, b) = read_columns(_input);
+    a.iter()
+        .sorted()
+        .zip_eq(b.iter().sorted())
+        .map(|(a, b)| (a - b).abs())
+        .sum()
+}
+
+fn solve_part_2(_input: impl Lines) -> i32 {
+    let (a, b) = read_columns(_input);
+    let counts = b.iter().fold(HashMap::new(), |mut counts, w| {
+        counts.entry(*w).and_modify(|v| *v += 1).or_insert(1);
+        counts
+    });
+    a.iter().map(|v| v * counts.get(v).unwrap_or(&0)).sum()
 }
 
 #[cfg(test)]
@@ -20,11 +51,31 @@ mod tests {
 
     #[test]
     fn test_part_1() {
-        aoc_test!(DAY, 1, 0, "");
+        aoc_test!(
+            DAY,
+            1,
+            11,
+            "3   4
+4   3
+2   5
+1   3
+3   9
+3   3"
+        );
     }
 
     #[test]
     fn test_part_2() {
-        aoc_test!(DAY, 1, 0, "");
+        aoc_test!(
+            DAY,
+            2,
+            31,
+            "3   4
+4   3
+2   5
+1   3
+3   9
+3   3"
+        );
     }
 }
