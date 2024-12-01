@@ -20,8 +20,8 @@ fn read_columns(input: impl Lines) -> (Vec<i32>, Vec<i32>) {
     (a, b)
 }
 
-fn solve_part_1(_input: impl Lines) -> i32 {
-    let (a, b) = read_columns(_input);
+fn solve_part_1(input: impl Lines) -> i32 {
+    let (a, b) = read_columns(input);
     a.iter()
         .sorted()
         .zip_eq(b.iter().sorted())
@@ -29,8 +29,8 @@ fn solve_part_1(_input: impl Lines) -> i32 {
         .sum()
 }
 
-fn solve_part_2(_input: impl Lines) -> i32 {
-    let (a, b) = read_columns(_input);
+fn solve_part_2(input: impl Lines) -> i32 {
+    let (a, b) = read_columns(input);
     let counts = b.iter().fold(HashMap::new(), |mut counts, w| {
         counts.entry(*w).and_modify(|v| *v += 1).or_insert(1);
         counts
