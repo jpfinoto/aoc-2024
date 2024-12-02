@@ -8,35 +8,35 @@ An overcomplicated setup for getting inputs and benchmarking the solutions!
 
 Benchmark CPU: **AMD Ryzen 9 7950X3D 16-Core Processor @ 4201 MHz**
 
-`|##------------------------------------------------| 2/50 stars`
+`|####----------------------------------------------| 4/50 stars`
 
-| Day | Part 1          | Part 2          |
-|-----|-----------------|-----------------|
-| 01  | 33.1µs / 68 KiB | 58.5µs / 33 KiB |
-| 02  | -               | -               |
-| 03  | -               | -               |
-| 04  | -               | -               |
-| 05  | -               | -               |
-| 06  | -               | -               |
-| 07  | -               | -               |
-| 08  | -               | -               |
-| 09  | -               | -               |
-| 10  | -               | -               |
-| 11  | -               | -               |
-| 12  | -               | -               |
-| 13  | -               | -               |
-| 14  | -               | -               |
-| 15  | -               | -               |
-| 16  | -               | -               |
-| 17  | -               | -               |
-| 18  | -               | -               |
-| 19  | -               | -               |
-| 20  | -               | -               |
-| 21  | -               | -               |
-| 22  | -               | -               |
-| 23  | -               | -               |
-| 24  | -               | -               |
-| 25  | -               | -               |
+| Day | Part 1            | Part 2           |
+|-----|-------------------|------------------|
+| 01  | 31.4µs / 68 KiB   | 57.6µs / 33 KiB  |
+| 02  | 121.1µs / 127 KiB | 285.9µs / 86 KiB |
+| 03  | -                 | -                |
+| 04  | -                 | -                |
+| 05  | -                 | -                |
+| 06  | -                 | -                |
+| 07  | -                 | -                |
+| 08  | -                 | -                |
+| 09  | -                 | -                |
+| 10  | -                 | -                |
+| 11  | -                 | -                |
+| 12  | -                 | -                |
+| 13  | -                 | -                |
+| 14  | -                 | -                |
+| 15  | -                 | -                |
+| 16  | -                 | -                |
+| 17  | -                 | -                |
+| 18  | -                 | -                |
+| 19  | -                 | -                |
+| 20  | -                 | -                |
+| 21  | -                 | -                |
+| 22  | -                 | -                |
+| 23  | -                 | -                |
+| 24  | -                 | -                |
+| 25  | -                 | -                |
 
 <!---BENCH_END--->
 
@@ -72,11 +72,11 @@ const DAY: Day = 1;
 
 solution!(DAY, solve_part_1, solve_part_2);
 
-fn solve_part_1(input: impl Lines) -> u32 {
+fn solve_part_1(input: impl Lines) -> i64 {
     0
 }
 
-fn solve_part_2(input: impl Lines) -> u32 {
+fn solve_part_2(input: impl Lines) -> i64 {
     0
 }
 
@@ -85,14 +85,16 @@ mod tests {
     use super::*;
     use crate::aoc_test;
 
+    const TEST_INPUT: &str = "";
+
     #[test]
     fn test_part_1() {
-        aoc_test!(DAY, 1, 0, "");
+        aoc_test!(DAY, 1, 0, TEST_INPUT);
     }
 
     #[test]
     fn test_part_2() {
-        aoc_test!(DAY, 1, 0, "");
+        aoc_test!(DAY, 2, 0, TEST_INPUT);
     }
 }
 
