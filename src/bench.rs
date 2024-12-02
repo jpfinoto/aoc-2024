@@ -44,7 +44,7 @@ impl Display for BenchmarkResults {
             1 => "1 iteration".to_string(),
             n => format!("{} iterations", n),
         };
-        
+
         write!(
             f,
             "{} / {} peak ({iter})",
@@ -54,22 +54,21 @@ impl Display for BenchmarkResults {
     }
 }
 
-
 pub(crate) fn benchmark<T, F: Fn() -> Option<T>>(
     bench_fn: F,
 ) -> Result<BenchmarkResults, BenchmarkError> {
+    // run the function to get an idea of how long it takes
     let start = Instant::now();
+    let _ = bench_fn().ok_or(BenchmarkError::NotImplemented)?;
+    let first_run_duration = start.elapsed();
 
-    // prepare stats
+    // measure the memory usage
+    // it's important that this is done in a second run because the stdlib might allocate
+    // things when first called, which would mess up the memory usage for part 1
     PEAK_ALLOC.reset_peak_usage();
     let initial_mem = PEAK_ALLOC.current_usage();
 
-    // run the function to get an idea of how long it takes
-    // and also measure peak memory usage
-    let _ = bench_fn().ok_or(BenchmarkError::NotImplemented)?;
-
-    // stop timer and count memory usage
-    let first_run_duration = start.elapsed();
+    bench_fn();
 
     let peak_mem = PEAK_ALLOC.peak_usage();
     let used_mem = peak_mem - initial_mem;

@@ -10,33 +10,33 @@ Benchmark CPU: **AMD Ryzen 9 7950X3D 16-Core Processor @ 4201 MHz**
 
 `|####----------------------------------------------| 4/50 stars`
 
-| Day | Part 1            | Part 2           |
-|-----|-------------------|------------------|
-| 01  | 31.4µs / 68 KiB   | 57.6µs / 33 KiB  |
-| 02  | 121.1µs / 127 KiB | 285.9µs / 86 KiB |
-| 03  | -                 | -                |
-| 04  | -                 | -                |
-| 05  | -                 | -                |
-| 06  | -                 | -                |
-| 07  | -                 | -                |
-| 08  | -                 | -                |
-| 09  | -                 | -                |
-| 10  | -                 | -                |
-| 11  | -                 | -                |
-| 12  | -                 | -                |
-| 13  | -                 | -                |
-| 14  | -                 | -                |
-| 15  | -                 | -                |
-| 16  | -                 | -                |
-| 17  | -                 | -                |
-| 18  | -                 | -                |
-| 19  | -                 | -                |
-| 20  | -                 | -                |
-| 21  | -                 | -                |
-| 22  | -                 | -                |
-| 23  | -                 | -                |
-| 24  | -                 | -                |
-| 25  | -                 | -                |
+| Day | Part 1           | Part 2           |
+|-----|------------------|------------------|
+| 01  | 35.3µs / 31 KiB  | 60.4µs / 33 KiB  |
+| 02  | 125.0µs / 85 KiB | 283.9µs / 86 KiB |
+| 03  | -                | -                |
+| 04  | -                | -                |
+| 05  | -                | -                |
+| 06  | -                | -                |
+| 07  | -                | -                |
+| 08  | -                | -                |
+| 09  | -                | -                |
+| 10  | -                | -                |
+| 11  | -                | -                |
+| 12  | -                | -                |
+| 13  | -                | -                |
+| 14  | -                | -                |
+| 15  | -                | -                |
+| 16  | -                | -                |
+| 17  | -                | -                |
+| 18  | -                | -                |
+| 19  | -                | -                |
+| 20  | -                | -                |
+| 21  | -                | -                |
+| 22  | -                | -                |
+| 23  | -                | -                |
+| 24  | -                | -                |
+| 25  | -                | -                |
 
 <!---BENCH_END--->
 
@@ -59,8 +59,8 @@ To update the benchmark, run `cargo run --release bench`.
 The benchmark runs the solution function for each part of each day, one after the other, and measures the average
 execution time and the peak heap usage.
 
-Heap usage is measured on the first call to each solver, so if you have some kind of `lazy_static` that gets allocated
-on the first run it will be measured!
+Heap usage is measured on the second call to each solver, so if you have some kind of `lazy_static` that gets allocated
+on the first run it will NOT be measured! Stack usage is also not measured.
 
 # Day Template
 
