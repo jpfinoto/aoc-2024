@@ -87,8 +87,8 @@ pub fn update_readme(results: &BenchmarkMap) {
 
     let cpu = s.cpus().first().unwrap();
 
-    let proc_info = format!("{} @ {} MHz", cpu.brand().trim(), cpu.frequency());
-    let sys_info = format!("Benchmark CPU: **{proc_info}**");
+    let processor_name = cpu.brand().trim().to_string();
+    let sys_info = format!("Benchmark CPU: **{processor_name}**");
     let bench = format!("{sys_info}\n\n{star_road}\n\n{table_entries}");
 
     let updated_content = format!("{start}{MARKER_START}\n\n{bench}\n\n{MARKER_END}{footer}");

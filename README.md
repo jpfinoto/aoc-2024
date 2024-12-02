@@ -6,7 +6,7 @@ An overcomplicated setup for getting inputs and benchmarking the solutions!
 
 <!---BENCH_START--->
 
-Benchmark CPU: **AMD Ryzen 9 7950X3D 16-Core Processor @ 4201 MHz**
+Benchmark CPU: **AMD Ryzen 9 7950X3D 16-Core Processor**
 
 `|####----------------------------------------------| 4/50 stars`
 
