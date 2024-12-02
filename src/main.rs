@@ -80,7 +80,7 @@ fn get_last_day(solver_map: &SolverMap) -> Option<Day> {
                 .or(solver_map.get(&(day, 2)))
                 .and(Some(day))
         })
-        .next()
+        .last()
 }
 
 fn solve_one(
