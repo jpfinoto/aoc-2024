@@ -124,15 +124,18 @@ mod tests {
         None
     }
 
-    fn memory_intensive_solver() -> Option<f64> {
-        let mut fib_numbers = vec![1.0, 1.0];
+    #[allow(clippy::useless_vec)]
+    fn alloc_vec_solver() -> Option<i64> {
+        let vec = vec![1, 2, 3, 4];
+        Some(vec.iter().sum())
+    }
 
-        for _ in 0..100000 {
-            let [a, b] = fib_numbers.last_chunk().unwrap();
-            fib_numbers.push(a + b);
+    fn factorial_stack(n: f64) -> f64 {
+        if n > 1.0 {
+            n * factorial_stack(n - 1.0)
+        } else {
+            1.0
         }
-
-        Some(fib_numbers.iter().sum())
     }
 
     #[test]
@@ -156,9 +159,16 @@ mod tests {
     }
 
     #[test]
-    fn test_benchmark_memory_intensive_solver() {
-        let bench = benchmark(memory_intensive_solver);
+    fn test_benchmark_alloc_vec_solver() {
+        let bench = benchmark(alloc_vec_solver);
         assert!(bench.is_ok());
-        assert!(bench.unwrap().peak_memory > 10000);
+        assert!(bench.unwrap().peak_memory >= 4 * 4); // 4 * i64 numbers
+    }
+
+    #[test]
+    fn test_benchmark_stack_memory_solver() {
+        let bench = benchmark(|| Some(factorial_stack(1000.0)));
+        assert!(bench.is_ok());
+        assert_eq!(bench.unwrap().peak_memory, 0);
     }
 }
