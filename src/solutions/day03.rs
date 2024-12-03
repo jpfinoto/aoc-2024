@@ -1,6 +1,5 @@
 use crate::aoc::*;
 use crate::solution;
-use itertools::Itertools;
 use lazy_static::lazy_static;
 use regex::Regex;
 
@@ -28,43 +27,22 @@ fn solve_part_1(input: impl Lines) -> i64 {
 fn solve_part_2(input: impl Lines) -> i64 {
     let input = input.get_raw();
     let caps = INSTRUCTION_REGEX.captures_iter(input);
-    caps.fold(
-        State {
-            sum: 0,
-            enabled: true,
-        },
-        |state, cap| {
-            let instruction = cap.iter().skip(1).flatten().collect_vec();
+    let (_, sum) = caps.fold((true, 0), |(enabled, sum), cap| {
+        let mut instruction = cap.iter().skip(1).flatten();
 
-            match instruction[0].as_str() {
-                "do" => State {
-                    enabled: true,
-                    ..state
-                },
-                "don't" => State {
-                    enabled: false,
-                    ..state
-                },
-                "mul" if state.enabled => {
-                    let a = instruction[1].as_str().parse::<i64>().unwrap();
-                    let b = instruction[2].as_str().parse::<i64>().unwrap();
+        match instruction.next().unwrap().as_str() {
+            "do" => (true, sum),
+            "don't" => (false, sum),
+            "mul" if enabled => {
+                let a = instruction.next().unwrap().as_str().parse::<i64>().unwrap();
+                let b = instruction.next().unwrap().as_str().parse::<i64>().unwrap();
 
-                    State {
-                        sum: state.sum + a * b,
-                        ..state
-                    }
-                }
-                _ => state,
+                (enabled, sum + a * b)
             }
-        },
-    )
-    .sum
-}
-
-#[derive(Debug)]
-struct State {
-    sum: i64,
-    enabled: bool,
+            _ => (enabled, sum),
+        }
+    });
+    sum
 }
 
 #[cfg(test)]
