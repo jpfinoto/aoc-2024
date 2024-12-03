@@ -82,7 +82,13 @@ impl CachedOnlinePuzzleSource {
             .send()
             .map_err(|e| PuzzleInputApiError::ApiError(e.to_string()))?;
 
-        Ok(response.text().unwrap())
+        let data = response.text().unwrap();
+
+        if data.starts_with(DAY_NOT_UNLOCKED_START) {
+            Err(PuzzleInputApiError::NotUnlocked)
+        } else {
+            Ok(data)
+        }
     }
 
     fn download_and_cache(&self, day: Day) -> Result<String, PuzzleInputSaveError> {
@@ -117,6 +123,9 @@ impl PuzzleSource for CachedOnlinePuzzleSource {
     }
 }
 
+const DAY_NOT_UNLOCKED_START: &str =
+    "Please don't repeatedly request this endpoint before it unlocks!";
+
 #[derive(thiserror::Error, Debug)]
 pub enum OnlinePuzzleSourceCreateError {
     #[error("failed to load token at {path}: {message}")]
@@ -131,6 +140,8 @@ pub enum OnlinePuzzleSourceCreateError {
 pub enum PuzzleInputApiError {
     #[error("Advent of Code API returned an error: {0}")]
     ApiError(String),
+    #[error("Puzzle not unlocked")]
+    NotUnlocked,
 }
 
 #[derive(thiserror::Error, Debug)]
