@@ -16,7 +16,7 @@ lazy_static! {
 
 fn solve_part_1(input: impl Lines) -> i64 {
     let input = input.get_raw();
-    let caps = MUL_REGEX.captures_iter(input.as_str());
+    let caps = MUL_REGEX.captures_iter(input);
     caps.map(|cap| {
         let a = cap.get(1).unwrap().as_str().parse::<i64>().unwrap();
         let b = cap.get(2).unwrap().as_str().parse::<i64>().unwrap();
@@ -27,7 +27,7 @@ fn solve_part_1(input: impl Lines) -> i64 {
 
 fn solve_part_2(input: impl Lines) -> i64 {
     let input = input.get_raw();
-    let caps = INSTRUCTION_REGEX.captures_iter(input.as_str());
+    let caps = INSTRUCTION_REGEX.captures_iter(input);
     caps.fold(
         State {
             sum: 0,

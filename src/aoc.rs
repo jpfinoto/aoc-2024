@@ -1,4 +1,3 @@
-use itertools::Itertools;
 use std::collections::HashMap;
 use std::fmt::{Debug, Display};
 
@@ -84,39 +83,41 @@ macro_rules! aoc_test {
 }
 
 pub struct PuzzleInput {
-    lines: Vec<String>,
+    input: String,
 }
 
 pub trait Lines {
-    fn get_lines(&self) -> impl Iterator<Item = &str>;
-    fn get_raw(&self) -> String {
-        self.get_lines().join("\n")
+    fn get_raw(&self) -> &str;
+    fn get_lines(&self) -> impl Iterator<Item = &str> {
+        self.get_raw().lines().map(|s| s.trim())
     }
 }
 
 impl Lines for PuzzleInput {
-    fn get_lines(&self) -> impl Iterator<Item = &str> {
-        self.lines.iter().map(|s| s.as_str())
+    fn get_raw(&self) -> &str {
+        self.input.as_str()
     }
 }
 
 impl Lines for &PuzzleInput {
-    fn get_lines(&self) -> impl Iterator<Item = &str> {
-        self.lines.iter().map(|s| s.as_str())
+    fn get_raw(&self) -> &str {
+        self.input.as_str()
     }
 }
 
 impl<'a> From<&'a str> for PuzzleInput {
     fn from(value: &'a str) -> Self {
         Self {
-            lines: value.lines().map(|s| s.trim().to_owned()).collect(),
+            input: value.to_owned(),
         }
     }
 }
 
-impl From<Vec<String>> for PuzzleInput {
-    fn from(value: Vec<String>) -> Self {
-        Self { lines: value }
+impl From<&Vec<String>> for PuzzleInput {
+    fn from(value: &Vec<String>) -> Self {
+        Self {
+            input: value.join("\n"),
+        }
     }
 }
 
@@ -134,9 +135,7 @@ pub struct FixedDataSource {
 
 impl PuzzleSource for FixedDataSource {
     fn get_input(&self, _day: Day) -> Result<PuzzleInput, Box<dyn std::error::Error>> {
-        Ok(PuzzleInput {
-            lines: self.lines.clone(),
-        })
+        Ok(PuzzleInput::from(&self.lines))
     }
 }
 
