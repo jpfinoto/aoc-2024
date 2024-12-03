@@ -1,3 +1,4 @@
+use itertools::Itertools;
 use std::collections::HashMap;
 use std::fmt::{Debug, Display};
 
@@ -88,6 +89,9 @@ pub struct PuzzleInput {
 
 pub trait Lines {
     fn get_lines(&self) -> impl Iterator<Item = &str>;
+    fn get_raw(&self) -> String {
+        self.get_lines().join("\n")
+    }
 }
 
 impl Lines for PuzzleInput {
