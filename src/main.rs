@@ -3,6 +3,7 @@ pub mod bench;
 pub mod inputs;
 mod readme;
 pub mod solutions;
+pub mod utils;
 
 use crate::aoc::{get_days_iter, Day, Part, PuzzleSource, SolverMap};
 use crate::bench::{benchmark, BenchmarkResults};
