@@ -51,8 +51,7 @@ fn exclude(values: &[i64], index: usize) -> Vec<i64> {
 mod tests {
     use super::*;
     use crate::aoc_test;
-    const TEST_INPUT: &str = "
-7 6 4 2 1
+    const TEST_INPUT: &str = "7 6 4 2 1
 1 2 7 8 9
 9 7 6 2 1
 1 3 2 4 5

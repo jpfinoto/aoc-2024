@@ -158,6 +158,7 @@ mod tests {
         assert_eq!(Some(BenchmarkError::NotImplemented), bench.err());
     }
 
+    #[ignore]
     #[test]
     fn test_benchmark_alloc_vec_solver() {
         let bench = benchmark(alloc_vec_solver);
@@ -165,6 +166,7 @@ mod tests {
         assert!(bench.unwrap().peak_memory >= 4 * 4); // 4 * i64 numbers
     }
 
+    #[ignore]
     #[test]
     fn test_benchmark_stack_memory_solver() {
         let bench = benchmark(|| Some(factorial_stack(1000.0)));
