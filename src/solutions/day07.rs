@@ -17,16 +17,7 @@ fn solve_part_1(input: impl Lines) -> i64 {
     input
         .get_lines()
         .flat_map(parse_line)
-        .filter_map(|(result, inputs)| {
-            if find_operators(result, &inputs, &[Operation::Sum, Operation::Multiply])
-                .next()
-                .is_some()
-            {
-                Some(result)
-            } else {
-                None
-            }
-        })
+        .filter_map(check_line(&[Operation::Sum, Operation::Multiply]))
         .sum()
 }
 
@@ -34,21 +25,22 @@ fn solve_part_2(input: impl Lines) -> i64 {
     input
         .get_lines()
         .flat_map(parse_line)
-        .filter_map(|(result, inputs)| {
-            if find_operators(
-                result,
-                &inputs,
-                &[Operation::Sum, Operation::Multiply, Operation::Combine],
-            )
-            .next()
-            .is_some()
-            {
-                Some(result)
-            } else {
-                None
-            }
-        })
+        .filter_map(check_line(&[
+            Operation::Sum,
+            Operation::Multiply,
+            Operation::Combine,
+        ]))
         .sum()
+}
+
+fn check_line(options: &[Operation]) -> impl Fn((i64, Vec<i64>)) -> Option<i64> + use<'_> {
+    |(result, inputs)| {
+        if find_operators(result, &inputs, options).next().is_some() {
+            Some(result)
+        } else {
+            None
+        }
+    }
 }
 
 fn find_operators<'a, 'b>(
