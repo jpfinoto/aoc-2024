@@ -1,6 +1,6 @@
 use itertools::Itertools;
 use std::fmt::Formatter;
-use std::ops::Add;
+use std::ops::{Add, Mul, Sub};
 
 pub const DIR_UP: XY = XY { x: 0, y: -1 };
 pub const DIR_DOWN: XY = XY { x: 0, y: 1 };
@@ -95,6 +95,26 @@ impl Add for XY {
         XY {
             x: self.x + rhs.x,
             y: self.y + rhs.y,
+        }
+    }
+}
+
+impl Sub for XY {
+    type Output = XY;
+    fn sub(self, rhs: XY) -> XY {
+        XY {
+            x: self.x - rhs.x,
+            y: self.y - rhs.y,
+        }
+    }
+}
+
+impl Mul<i64> for XY {
+    type Output = XY;
+    fn mul(self, rhs: i64) -> Self::Output {
+        XY {
+            x: self.x * rhs,
+            y: self.y * rhs,
         }
     }
 }
