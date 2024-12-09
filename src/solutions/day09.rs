@@ -50,17 +50,15 @@ fn solve_part_2(input: impl Lines) -> usize {
         tail.pop_front();
         blocks.extend(iter::once(Block::Empty(file.length)));
         blocks.append(&mut tail);
-        let mut insert_pos = None;
-        for (i, block) in blocks.iter().enumerate() {
-            match block {
-                Block::Empty(length) if *length >= file.length => {
-                    insert_pos = Some(i);
-                    break;
-                }
-                _ => {}
-            }
-        }
-        let insert_pos = insert_pos.unwrap();
+        let insert_pos = blocks
+            .iter()
+            .enumerate()
+            .filter_map(|(i, block)| match block {
+                Block::Empty(length) if *length >= file.length => Some(i),
+                _ => None,
+            })
+            .next()
+            .unwrap();
         let mut tail = blocks.split_off(insert_pos);
         let Block::Empty(empty_block_length) = tail.pop_front().unwrap() else {
             panic!("Block isn't empty?")
