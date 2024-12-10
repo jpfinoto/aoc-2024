@@ -1,5 +1,6 @@
 use itertools::Itertools;
 use std::fmt::Formatter;
+use std::iter;
 use std::ops::{Add, Mul, Sub};
 
 pub const DIR_UP: XY = XY { x: 0, y: -1 };
@@ -86,6 +87,13 @@ impl XY {
             x: -self.y,
             y: self.x,
         }
+    }
+
+    pub fn cardinal_neighbours(&self) -> impl Iterator<Item = XY> {
+        iter::once(*self + DIR_UP)
+            .chain(iter::once(*self + DIR_DOWN))
+            .chain(iter::once(*self + DIR_LEFT))
+            .chain(iter::once(*self + DIR_RIGHT))
     }
 }
 

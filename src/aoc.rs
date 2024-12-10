@@ -151,10 +151,10 @@ mod tests {
         input.get_lines().map(|l| l.parse::<u64>().unwrap()).sum()
     }
 
-    solution!(10, sum_lines);
+    solution!(100, sum_lines);
 
     #[test]
     fn test_implemented_solver() {
-        aoc_test!(10, 1, 6, "1\n2\n3");
+        aoc_test!(100, 1, 6, "1\n2\n3");
     }
 }
