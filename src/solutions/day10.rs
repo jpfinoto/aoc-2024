@@ -6,24 +6,25 @@ use std::collections::{HashSet, VecDeque};
 
 const DAY: Day = 10;
 
-solution!(DAY, solve_part_1);
+solution!(DAY, solve_part_1, solve_part_2);
 
 fn solve_part_1(input: impl Lines) -> usize {
     let map = parse(&input);
     map.find(&0)
         .par_bridge()
-        // .inspect(|p| println!("{p:?}"))
-        .map(|pos| find_trails(pos, &map))
-        // .inspect(|score| println!("{score:?}"))
+        .map(|pos| find_trails(pos, &map, true))
         .sum()
 }
 
-#[allow(unused)]
-fn solve_part_2(input: impl Lines) -> i64 {
-    0
+fn solve_part_2(input: impl Lines) -> usize {
+    let map = parse(&input);
+    map.find(&0)
+        .par_bridge()
+        .map(|pos| find_trails(pos, &map, false))
+        .sum()
 }
 
-fn find_trails(start: XY, map: &DenseGrid<u8>) -> usize {
+fn find_trails(start: XY, map: &DenseGrid<u8>, remove_duplicates: bool) -> usize {
     let mut visited = HashSet::new();
     let mut pending = VecDeque::new();
     pending.push_back(start);
@@ -32,7 +33,7 @@ fn find_trails(start: XY, map: &DenseGrid<u8>) -> usize {
 
     while !pending.is_empty() {
         let current_pos = pending.pop_front().unwrap();
-        if visited.contains(&current_pos) {
+        if remove_duplicates && visited.contains(&current_pos) {
             continue;
         }
         let current_value = *map.at(current_pos.as_tuple()).unwrap();
@@ -44,7 +45,6 @@ fn find_trails(start: XY, map: &DenseGrid<u8>) -> usize {
             }
         }
         if current_value == 9 {
-            // println!("found a 9 at {current_pos:?}");
             score += 1;
         }
     }
@@ -82,6 +82,6 @@ mod tests {
 
     #[test]
     fn test_part_2() {
-        aoc_test!(DAY, 2, 0, TEST_INPUT);
+        aoc_test!(DAY, 2, 81, TEST_INPUT);
     }
 }
