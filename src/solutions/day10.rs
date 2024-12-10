@@ -8,23 +8,30 @@ const DAY: Day = 10;
 
 solution!(DAY, solve_part_1, solve_part_2);
 
+#[derive(Eq, PartialEq, Copy, Clone)]
+enum ScoringMode {
+    PeakCount,
+    AllPaths,
+}
+
 fn solve_part_1(input: impl Lines) -> usize {
     let map = parse(&input);
-    map.find(&0)
-        .par_bridge()
-        .map(|pos| find_trails(pos, &map, true))
-        .sum()
+    solve(&map, ScoringMode::PeakCount)
 }
 
 fn solve_part_2(input: impl Lines) -> usize {
     let map = parse(&input);
+    solve(&map, ScoringMode::AllPaths)
+}
+
+fn solve(map: &DenseGrid<u8>, scoring_mode: ScoringMode) -> usize {
     map.find(&0)
         .par_bridge()
-        .map(|pos| find_trails(pos, &map, false))
+        .map(|pos| get_trail_scores(pos, map, scoring_mode))
         .sum()
 }
 
-fn find_trails(start: XY, map: &DenseGrid<u8>, remove_duplicates: bool) -> usize {
+fn get_trail_scores(start: XY, map: &DenseGrid<u8>, scoring_mode: ScoringMode) -> usize {
     let mut visited = HashSet::new();
     let mut pending = VecDeque::new();
     pending.push_back(start);
@@ -33,7 +40,7 @@ fn find_trails(start: XY, map: &DenseGrid<u8>, remove_duplicates: bool) -> usize
 
     while !pending.is_empty() {
         let current_pos = pending.pop_front().unwrap();
-        if remove_duplicates && visited.contains(&current_pos) {
+        if scoring_mode == ScoringMode::PeakCount && visited.contains(&current_pos) {
             continue;
         }
         let current_value = *map.at(current_pos.as_tuple()).unwrap();
