@@ -70,7 +70,10 @@ pub fn update_readme(results: &BenchmarkMap) {
             let r1 = results.get(&(d, 1));
             let r2 = results.get(&(d, 2));
             [
-                format!("{d:02}"),
+                r1.or(r2).map_or_else(
+                    || format!("{d:02}"),
+                    |_| format!("[{d:02}](src/solutions/day{d:02}.rs)"),
+                ),
                 format_day_bench(r1),
                 format_day_bench(r2),
             ]

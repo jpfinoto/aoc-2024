@@ -8,35 +8,35 @@ An overcomplicated setup for getting inputs and benchmarking the solutions!
 
 Benchmark CPU: **AMD Ryzen 9 7950X3D 16-Core Processor**
 
-`|####################------------------------------| 20/50 stars`
+`|#####################-----------------------------| 21/50 stars`
 
-| Day | Part 1             | Part 2              |
-|-----|--------------------|---------------------|
-| 01  | 47.4µs / 31 KiB    | 73.9µs / 33 KiB     |
-| 02  | 152.7µs / 86 KiB   | 319.9µs / 86 KiB    |
-| 03  | 94.7µs / 96 bytes  | 148.9µs / 192 bytes |
-| 04  | 1.6ms / 109 KiB    | 4.4ms / 628 KiB     |
-| 05  | 218.1µs / 17 KiB   | 219.0µs / 17 KiB    |
-| 06  | 443.5µs / 1 MiB    | 122.0ms / 1 MiB     |
-| 07  | 14.0ms / 696 bytes | 723.1ms / 696 bytes |
-| 08  | 23.4µs / 20 KiB    | 173.1µs / 59 KiB    |
-| 09  | 996.1µs / 2 MiB    | 588.7ms / 1 MiB     |
-| 10  | 314.3µs / 38 KiB   | 307.5µs / 16 KiB    |
-| 11  | -                  | -                   |
-| 12  | -                  | -                   |
-| 13  | -                  | -                   |
-| 14  | -                  | -                   |
-| 15  | -                  | -                   |
-| 16  | -                  | -                   |
-| 17  | -                  | -                   |
-| 18  | -                  | -                   |
-| 19  | -                  | -                   |
-| 20  | -                  | -                   |
-| 21  | -                  | -                   |
-| 22  | -                  | -                   |
-| 23  | -                  | -                   |
-| 24  | -                  | -                   |
-| 25  | -                  | -                   |
+| Day                          | Part 1             | Part 2              |
+|------------------------------|--------------------|---------------------|
+| [01](src/solutions/day01.rs) | 47.4µs / 31 KiB    | 73.9µs / 33 KiB     |
+| [02](src/solutions/day02.rs) | 152.7µs / 86 KiB   | 319.9µs / 86 KiB    |
+| [03](src/solutions/day03.rs) | 94.7µs / 96 bytes  | 148.9µs / 192 bytes |
+| [04](src/solutions/day04.rs) | 1.6ms / 109 KiB    | 4.4ms / 628 KiB     |
+| [05](src/solutions/day05.rs) | 218.1µs / 17 KiB   | 219.0µs / 17 KiB    |
+| [06](src/solutions/day06.rs) | 443.5µs / 1 MiB    | 122.0ms / 1 MiB     |
+| [07](src/solutions/day07.rs) | 14.0ms / 696 bytes | 723.1ms / 696 bytes |
+| [08](src/solutions/day08.rs) | 23.4µs / 20 KiB    | 173.1µs / 59 KiB    |
+| [09](src/solutions/day09.rs) | 996.1µs / 2 MiB    | 588.7ms / 1 MiB     |
+| [10](src/solutions/day10.rs) | 314.3µs / 38 KiB   | 307.5µs / 16 KiB    |
+| [11](src/solutions/day11.rs) | 7.0ms / 5 MiB      | -                   |
+| 12                           | -                  | -                   |
+| 13                           | -                  | -                   |
+| 14                           | -                  | -                   |
+| 15                           | -                  | -                   |
+| 16                           | -                  | -                   |
+| 17                           | -                  | -                   |
+| 18                           | -                  | -                   |
+| 19                           | -                  | -                   |
+| 20                           | -                  | -                   |
+| 21                           | -                  | -                   |
+| 22                           | -                  | -                   |
+| 23                           | -                  | -                   |
+| 24                           | -                  | -                   |
+| 25                           | -                  | -                   |
 
 <!---BENCH_END--->
 
