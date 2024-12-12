@@ -1,4 +1,5 @@
 use itertools::Itertools;
+use std::collections::HashSet;
 use std::fmt::Formatter;
 use std::iter;
 use std::ops::{Add, Mul, Sub};
@@ -21,7 +22,7 @@ pub struct DenseGrid<T> {
     cells: Vec<T>,
 }
 
-impl<T: Copy + Clone> DenseGrid<T> {
+impl<T: Clone> DenseGrid<T> {
     pub fn from_rows(rows: Vec<Vec<T>>) -> DenseGrid<T> {
         let width = rows[0].len() as i64;
         let height = rows.len() as i64;
@@ -29,6 +30,22 @@ impl<T: Copy + Clone> DenseGrid<T> {
         DenseGrid {
             width,
             height,
+            cells,
+        }
+    }
+
+    pub fn from_iter(width: usize, elements: impl Iterator<Item = T>) -> DenseGrid<T> {
+        let cells: Vec<_> = elements.collect();
+        if cells.len() % width != 0 {
+            panic!(
+                "grid is not a square, width={width}, length={}",
+                cells.len()
+            );
+        }
+        let height = cells.len() / width;
+        DenseGrid {
+            width: width as i64,
+            height: height as i64,
             cells,
         }
     }
@@ -53,6 +70,18 @@ impl<T: Copy + Clone> DenseGrid<T> {
     pub fn rows(&self) -> impl Iterator<Item = &[T]> {
         (0..self.height)
             .map(|y| &self.cells[(y * self.height) as usize..((y + 1) * self.height) as usize])
+    }
+
+    pub fn items(&self) -> impl Iterator<Item = (XY, &T)> {
+        self.cells.iter().enumerate().map(|(i, value)| {
+            (
+                XY {
+                    x: (i as i64) % self.width,
+                    y: (i as i64) / self.width,
+                },
+                value,
+            )
+        })
     }
 
     pub fn width(&self) -> i64 {
@@ -89,11 +118,22 @@ impl XY {
         }
     }
 
-    pub fn cardinal_neighbours(&self) -> impl Iterator<Item = XY> {
+    pub fn cardinal_neighbours(&self) -> impl Iterator<Item = XY> + Clone {
         iter::once(*self + DIR_UP)
             .chain(iter::once(*self + DIR_DOWN))
             .chain(iter::once(*self + DIR_LEFT))
             .chain(iter::once(*self + DIR_RIGHT))
+    }
+
+    pub fn corner_neighbours(&self) -> impl Iterator<Item = XY> + Clone {
+        iter::once(*self + DIR_UP + DIR_LEFT)
+            .chain(iter::once(*self + DIR_UP + DIR_RIGHT))
+            .chain(iter::once(*self + DIR_DOWN + DIR_LEFT))
+            .chain(iter::once(*self + DIR_DOWN + DIR_RIGHT))
+    }
+
+    pub fn all_neighbours(&self) -> impl Iterator<Item = XY> + Clone {
+        self.cardinal_neighbours().chain(self.corner_neighbours())
     }
 }
 
@@ -135,4 +175,11 @@ impl<T: std::fmt::Display + Copy + Clone> std::fmt::Display for DenseGrid<T> {
         });
         Ok(())
     }
+}
+
+pub fn area_outline(area: &HashSet<XY>) -> HashSet<XY> {
+    area.iter()
+        .flat_map(XY::all_neighbours)
+        .filter(|p| !area.contains(p))
+        .collect()
 }
