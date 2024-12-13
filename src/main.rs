@@ -1,5 +1,6 @@
 pub mod aoc;
 pub mod bench;
+mod benchmark_cache;
 pub mod inputs;
 mod readme;
 pub mod solutions;
@@ -7,6 +8,7 @@ pub mod utils;
 
 use crate::aoc::{get_days_iter, Day, Part, PuzzleSource, SolverMap};
 use crate::bench::{benchmark, BenchmarkResults};
+use crate::benchmark_cache::{get_cached_benchmarks, save_cached_benchmarks};
 use crate::inputs::CachedOnlinePuzzleSource;
 use crate::readme::update_readme;
 use crate::solutions::get_solvers;
@@ -43,16 +45,25 @@ fn main() -> Result<(), String> {
         .get_matches();
 
     if let Some(bench_args) = matches.subcommand_matches("bench") {
-        if let Some(day) = bench_args.get_one::<String>("day") {
-            run_benchmarks(
-                &solvers,
-                &puzzle_source,
-                iter::once(day.parse::<Day>().unwrap()),
-            );
-        } else {
-            let results = run_benchmarks(&solvers, &puzzle_source, get_days_iter());
-            update_readme(&results);
-        }
+        let benchmarks = {
+            if let Some(day) = bench_args.get_one::<String>("day") {
+                get_cached_benchmarks()
+                    .map(|mut bench| {
+                        bench.extend(run_benchmarks(
+                            &solvers,
+                            &puzzle_source,
+                            iter::once(day.parse::<Day>().unwrap()),
+                        ));
+                        bench
+                    })
+                    .or_else(|| Some(run_benchmarks(&solvers, &puzzle_source, get_days_iter())))
+                    .unwrap()
+            } else {
+                run_benchmarks(&solvers, &puzzle_source, get_days_iter())
+            }
+        };
+        save_cached_benchmarks(&benchmarks);
+        update_readme(&benchmarks);
         Ok(())
     } else if let Some(solve_args) = matches.subcommand_matches("solve") {
         if let Some(day) = solve_args.get_one::<String>("day") {

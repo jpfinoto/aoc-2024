@@ -1,0 +1,299 @@
+[[benchmarks]]
+day = 1
+part = 1
+
+[benchmarks.result]
+iterations = 33091
+peak_memory = 32192
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 42894
+
+[[benchmarks]]
+day = 1
+part = 2
+
+[benchmarks.result]
+iterations = 53135
+peak_memory = 34336
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 68707
+
+[[benchmarks]]
+day = 2
+part = 1
+
+[benchmarks.result]
+iterations = 11050
+peak_memory = 88632
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 134039
+
+[[benchmarks]]
+day = 2
+part = 2
+
+[benchmarks.result]
+iterations = 16073
+peak_memory = 88688
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 302818
+
+[[benchmarks]]
+day = 3
+part = 1
+
+[benchmarks.result]
+iterations = 7564
+peak_memory = 96
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 89264
+
+[[benchmarks]]
+day = 3
+part = 2
+
+[benchmarks.result]
+iterations = 12213
+peak_memory = 192
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 140135
+
+[[benchmarks]]
+day = 4
+part = 1
+
+[benchmarks.result]
+iterations = 2342
+peak_memory = 112380
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 1547826
+
+[[benchmarks]]
+day = 4
+part = 2
+
+[benchmarks.result]
+iterations = 1143
+peak_memory = 643104
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 4213388
+
+[[benchmarks]]
+day = 5
+part = 1
+
+[benchmarks.result]
+iterations = 9572
+peak_memory = 18272
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 205326
+
+[[benchmarks]]
+day = 5
+part = 2
+
+[benchmarks.result]
+iterations = 24963
+peak_memory = 18272
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 203382
+
+[[benchmarks]]
+day = 6
+part = 1
+
+[benchmarks.result]
+iterations = 8858
+peak_memory = 1216512
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 317460
+
+[[benchmarks]]
+day = 6
+part = 2
+
+[benchmarks.result]
+iterations = 45
+peak_memory = 1413248
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 113300755
+
+[[benchmarks]]
+day = 7
+part = 1
+
+[benchmarks.result]
+iterations = 346
+peak_memory = 696
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 13391867
+
+[[benchmarks]]
+day = 7
+part = 2
+
+[benchmarks.result]
+iterations = 8
+peak_memory = 696
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 691024425
+
+[[benchmarks]]
+day = 8
+part = 1
+
+[benchmarks.result]
+iterations = 23913
+peak_memory = 21296
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 21685
+
+[[benchmarks]]
+day = 8
+part = 2
+
+[benchmarks.result]
+iterations = 26179
+peak_memory = 60464
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 164772
+
+[[benchmarks]]
+day = 9
+part = 1
+
+[benchmarks.result]
+iterations = 3199
+peak_memory = 3089632
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 928448
+
+[[benchmarks]]
+day = 9
+part = 2
+
+[benchmarks.result]
+iterations = 9
+peak_memory = 1518344
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 572295888
+
+[[benchmarks]]
+day = 10
+part = 1
+
+[benchmarks.result]
+iterations = 4958
+peak_memory = 33388
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 245118
+
+[[benchmarks]]
+day = 10
+part = 2
+
+[benchmarks.result]
+iterations = 19143
+peak_memory = 16532
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 234003
+
+[[benchmarks]]
+day = 11
+part = 1
+
+[benchmarks.result]
+iterations = 19268
+peak_memory = 153696
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 154473
+
+[[benchmarks]]
+day = 12
+part = 1
+
+[benchmarks.result]
+iterations = 80
+peak_memory = 984176
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 61460937
+
+[[benchmarks]]
+day = 12
+part = 2
+
+[benchmarks.result]
+iterations = 84
+peak_memory = 984176
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 62360152
+
+[[benchmarks]]
+day = 13
+part = 1
+
+[benchmarks.result]
+iterations = 6959
+peak_memory = 224
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 245743
+
+[[benchmarks]]
+day = 13
+part = 2
+
+[benchmarks.result]
+iterations = 20636
+peak_memory = 224
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 244029

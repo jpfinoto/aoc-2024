@@ -1,12 +1,13 @@
 use crate::PEAK_ALLOC;
+use serde::{Deserialize, Serialize};
 use std::cmp::min;
 use std::fmt::{Display, Formatter};
 use std::time::{Duration, Instant};
 
-const TARGET_DURATION_PER_PART: Duration = Duration::from_secs(1);
-const MAX_RUNS: usize = 1_000_000;
+const TARGET_DURATION_PER_PART: Duration = Duration::from_secs(5);
+const MAX_RUNS: usize = 1_000_000_000;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub(crate) struct BenchmarkResults {
     pub iterations: usize,
     pub average_duration: Duration,

@@ -12,19 +12,19 @@ Benchmark CPU: **AMD Ryzen 9 7950X3D 16-Core Processor**
 
 | Day                          | Part 1              | Part 2              |
 |------------------------------|---------------------|---------------------|
-| [01](src/solutions/day01.rs) | 42.5µs / 31 KiB     | 66.3µs / 33 KiB     |
-| [02](src/solutions/day02.rs) | 175.2µs / 86 KiB    | 319.7µs / 86 KiB    |
-| [03](src/solutions/day03.rs) | 94.9µs / 96 bytes   | 145.9µs / 192 bytes |
-| [04](src/solutions/day04.rs) | 1.5ms / 109 KiB     | 4.3ms / 628 KiB     |
-| [05](src/solutions/day05.rs) | 216.2µs / 17 KiB    | 212.5µs / 17 KiB    |
-| [06](src/solutions/day06.rs) | 494.5µs / 1 MiB     | 112.7ms / 1 MiB     |
-| [07](src/solutions/day07.rs) | 14.2ms / 696 bytes  | 698.3ms / 696 bytes |
-| [08](src/solutions/day08.rs) | 25.1µs / 20 KiB     | 166.9µs / 59 KiB    |
-| [09](src/solutions/day09.rs) | 1.1ms / 2 MiB       | 563.7ms / 1 MiB     |
-| [10](src/solutions/day10.rs) | 277.1µs / 30 KiB    | 268.9µs / 19 KiB    |
-| [11](src/solutions/day11.rs) | 4.0ms / 5 MiB       | -                   |
-| [12](src/solutions/day12.rs) | 68.8ms / 961 KiB    | 68.6ms / 961 KiB    |
-| [13](src/solutions/day13.rs) | 249.0µs / 224 bytes | 250.3µs / 224 bytes |
+| [01](src/solutions/day01.rs) | 42.9µs / 31 KiB     | 68.7µs / 33 KiB     |
+| [02](src/solutions/day02.rs) | 134.0µs / 86 KiB    | 302.8µs / 86 KiB    |
+| [03](src/solutions/day03.rs) | 89.3µs / 96 bytes   | 140.1µs / 192 bytes |
+| [04](src/solutions/day04.rs) | 1.5ms / 109 KiB     | 4.2ms / 628 KiB     |
+| [05](src/solutions/day05.rs) | 205.3µs / 17 KiB    | 203.4µs / 17 KiB    |
+| [06](src/solutions/day06.rs) | 317.5µs / 1 MiB     | 113.3ms / 1 MiB     |
+| [07](src/solutions/day07.rs) | 13.4ms / 696 bytes  | 691.0ms / 696 bytes |
+| [08](src/solutions/day08.rs) | 21.7µs / 20 KiB     | 164.8µs / 59 KiB    |
+| [09](src/solutions/day09.rs) | 928.4µs / 2 MiB     | 572.3ms / 1 MiB     |
+| [10](src/solutions/day10.rs) | 245.1µs / 32 KiB    | 234.0µs / 16 KiB    |
+| [11](src/solutions/day11.rs) | 154.5µs / 150 KiB   | -                   |
+| [12](src/solutions/day12.rs) | 61.5ms / 961 KiB    | 62.4ms / 961 KiB    |
+| [13](src/solutions/day13.rs) | 245.7µs / 224 bytes | 244.0µs / 224 bytes |
 | 14                           | -                   | -                   |
 | 15                           | -                   | -                   |
 | 16                           | -                   | -                   |
