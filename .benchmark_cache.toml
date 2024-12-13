@@ -243,12 +243,24 @@ day = 11
 part = 1
 
 [benchmarks.result]
-iterations = 19268
+iterations = 17883
 peak_memory = 153696
 
 [benchmarks.result.average_duration]
 secs = 0
-nanos = 154473
+nanos = 159559
+
+[[benchmarks]]
+day = 11
+part = 2
+
+[benchmarks.result]
+iterations = 403
+peak_memory = 9830496
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 11407410
 
 [[benchmarks]]
 day = 12
