@@ -8,35 +8,35 @@ An overcomplicated setup for getting inputs and benchmarking the solutions!
 
 Benchmark CPU: **AMD Ryzen 9 7950X3D 16-Core Processor**
 
-`|#######################---------------------------| 23/50 stars`
+`|#########################-------------------------| 25/50 stars`
 
-| Day                          | Part 1             | Part 2              |
-|------------------------------|--------------------|---------------------|
-| [01](src/solutions/day01.rs) | 47.8µs / 31 KiB    | 72.3µs / 33 KiB     |
-| [02](src/solutions/day02.rs) | 142.8µs / 86 KiB   | 305.2µs / 86 KiB    |
-| [03](src/solutions/day03.rs) | 92.7µs / 96 bytes  | 146.5µs / 192 bytes |
-| [04](src/solutions/day04.rs) | 1.6ms / 109 KiB    | 4.2ms / 628 KiB     |
-| [05](src/solutions/day05.rs) | 214.4µs / 17 KiB   | 208.8µs / 17 KiB    |
-| [06](src/solutions/day06.rs) | 432.2µs / 1 MiB    | 115.3ms / 1 MiB     |
-| [07](src/solutions/day07.rs) | 13.2ms / 696 bytes | 682.3ms / 696 bytes |
-| [08](src/solutions/day08.rs) | 22.7µs / 20 KiB    | 163.4µs / 59 KiB    |
-| [09](src/solutions/day09.rs) | 977.6µs / 2 MiB    | 561.2ms / 1 MiB     |
-| [10](src/solutions/day10.rs) | 231.5µs / 38 KiB   | 216.2µs / 21 KiB    |
-| [11](src/solutions/day11.rs) | 4.3ms / 5 MiB      | -                   |
-| [12](src/solutions/day12.rs) | 65.1ms / 961 KiB   | 66.0ms / 961 KiB    |
-| 13                           | -                  | -                   |
-| 14                           | -                  | -                   |
-| 15                           | -                  | -                   |
-| 16                           | -                  | -                   |
-| 17                           | -                  | -                   |
-| 18                           | -                  | -                   |
-| 19                           | -                  | -                   |
-| 20                           | -                  | -                   |
-| 21                           | -                  | -                   |
-| 22                           | -                  | -                   |
-| 23                           | -                  | -                   |
-| 24                           | -                  | -                   |
-| 25                           | -                  | -                   |
+| Day                          | Part 1              | Part 2              |
+|------------------------------|---------------------|---------------------|
+| [01](src/solutions/day01.rs) | 42.5µs / 31 KiB     | 66.3µs / 33 KiB     |
+| [02](src/solutions/day02.rs) | 175.2µs / 86 KiB    | 319.7µs / 86 KiB    |
+| [03](src/solutions/day03.rs) | 94.9µs / 96 bytes   | 145.9µs / 192 bytes |
+| [04](src/solutions/day04.rs) | 1.5ms / 109 KiB     | 4.3ms / 628 KiB     |
+| [05](src/solutions/day05.rs) | 216.2µs / 17 KiB    | 212.5µs / 17 KiB    |
+| [06](src/solutions/day06.rs) | 494.5µs / 1 MiB     | 112.7ms / 1 MiB     |
+| [07](src/solutions/day07.rs) | 14.2ms / 696 bytes  | 698.3ms / 696 bytes |
+| [08](src/solutions/day08.rs) | 25.1µs / 20 KiB     | 166.9µs / 59 KiB    |
+| [09](src/solutions/day09.rs) | 1.1ms / 2 MiB       | 563.7ms / 1 MiB     |
+| [10](src/solutions/day10.rs) | 277.1µs / 30 KiB    | 268.9µs / 19 KiB    |
+| [11](src/solutions/day11.rs) | 4.0ms / 5 MiB       | -                   |
+| [12](src/solutions/day12.rs) | 68.8ms / 961 KiB    | 68.6ms / 961 KiB    |
+| [13](src/solutions/day13.rs) | 249.0µs / 224 bytes | 250.3µs / 224 bytes |
+| 14                           | -                   | -                   |
+| 15                           | -                   | -                   |
+| 16                           | -                   | -                   |
+| 17                           | -                   | -                   |
+| 18                           | -                   | -                   |
+| 19                           | -                   | -                   |
+| 20                           | -                   | -                   |
+| 21                           | -                   | -                   |
+| 22                           | -                   | -                   |
+| 23                           | -                   | -                   |
+| 24                           | -                   | -                   |
+| 25                           | -                   | -                   |
 
 <!---BENCH_END--->
 
