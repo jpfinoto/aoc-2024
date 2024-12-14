@@ -315,21 +315,21 @@ day = 14
 part = 1
 
 [benchmarks.result]
-iterations = 6608
+iterations = 6235
 peak_memory = 316
 
 [benchmarks.result.average_duration]
 secs = 0
-nanos = 98628
+nanos = 109915
 
 [[benchmarks]]
 day = 14
 part = 2
 
 [benchmarks.result]
-iterations = 29
-peak_memory = 84140
+iterations = 37
+peak_memory = 42528
 
 [benchmarks.result.average_duration]
 secs = 0
-nanos = 144660300
+nanos = 137524959

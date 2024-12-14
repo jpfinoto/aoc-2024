@@ -22,25 +22,29 @@ fn solve_part_1(input: impl Lines) -> usize {
 fn solve_part_2(input: impl Lines) -> usize {
     let w = 101;
     let h = 103;
+    let should_print = false;
 
     let robots = parse(input.get_raw()).collect_vec();
     let min_inertia = 500000; // LOL, LMAO even
 
     for steps in 0.. {
-        let mut grid = DenseGrid::from_iter(w, iter::repeat_n('.', w * h));
         let mut positions = HashSet::new();
         for robot in &robots {
             let pos = evolve_robot(robot, w, h, steps).p;
             positions.insert(pos);
-            grid.try_set_at(pos.as_tuple(), 'X').unwrap()
         }
 
         let current_inertia = inertia(&positions);
 
         if current_inertia < min_inertia {
-            // min_inertia = current_inertia;
-            // println!("{grid}");
-            // println!("{steps}, inertia: {current_inertia}");
+            if should_print {
+                let mut grid = DenseGrid::from_iter(w, iter::repeat_n('.', w * h));
+                for pos in positions {
+                    grid.try_set_at(pos.as_tuple(), 'X').unwrap();
+                }
+                println!("{grid}");
+                println!("{steps}, inertia: {current_inertia}");
+            }
 
             return steps;
         }
