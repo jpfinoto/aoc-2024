@@ -69,7 +69,7 @@ impl<T: Clone> DenseGrid<T> {
 
     pub fn rows(&self) -> impl Iterator<Item = &[T]> {
         (0..self.height)
-            .map(|y| &self.cells[(y * self.height) as usize..((y + 1) * self.height) as usize])
+            .map(|y| &self.cells[(y * self.width) as usize..((y + 1) * self.width) as usize])
     }
 
     pub fn items(&self) -> impl Iterator<Item = (XY, &T)> {
@@ -134,6 +134,10 @@ impl XY {
 
     pub fn all_neighbours(&self) -> impl Iterator<Item = XY> + Clone {
         self.cardinal_neighbours().chain(self.corner_neighbours())
+    }
+
+    pub fn length_sq(&self) -> i64 {
+        self.x * self.x + self.y * self.y
     }
 }
 
