@@ -4,10 +4,11 @@ use std::fmt::Formatter;
 use std::iter;
 use std::ops::{Add, Mul, Sub};
 
-pub const DIR_UP: XY = XY { x: 0, y: -1 };
-pub const DIR_DOWN: XY = XY { x: 0, y: 1 };
-pub const DIR_LEFT: XY = XY { x: -1, y: 0 };
-pub const DIR_RIGHT: XY = XY { x: 1, y: 0 };
+pub type Direction = XY;
+pub const DIR_UP: Direction = XY { x: 0, y: -1 };
+pub const DIR_DOWN: Direction = XY { x: 0, y: 1 };
+pub const DIR_LEFT: Direction = XY { x: -1, y: 0 };
+pub const DIR_RIGHT: Direction = XY { x: 1, y: 0 };
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 pub struct XY {
@@ -65,6 +66,10 @@ impl<T: Clone> DenseGrid<T> {
             self.cells[(x + y * self.width) as usize] = val;
             Some(())
         }
+    }
+
+    pub fn set_at(&mut self, pos: (i64, i64), val: T) {
+        self.try_set_at(pos, val).unwrap()
     }
 
     pub fn rows(&self) -> impl Iterator<Item = &[T]> {
