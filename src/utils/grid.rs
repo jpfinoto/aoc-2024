@@ -144,6 +144,10 @@ impl XY {
     pub fn length_sq(&self) -> i64 {
         self.x * self.x + self.y * self.y
     }
+
+    pub fn taxicab_length(&self) -> i64 {
+        self.x.abs() + self.y.abs()
+    }
 }
 
 impl Add for XY {

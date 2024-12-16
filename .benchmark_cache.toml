@@ -357,3 +357,27 @@ peak_memory = 794624
 [benchmarks.result.average_duration]
 secs = 0
 nanos = 2952525
+
+[[benchmarks]]
+day = 16
+part = 1
+
+[benchmarks.result]
+iterations = 1093
+peak_memory = 2760880
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 3937492
+
+[[benchmarks]]
+day = 16
+part = 2
+
+[benchmarks.result]
+iterations = 703
+peak_memory = 5840368
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 6851278
