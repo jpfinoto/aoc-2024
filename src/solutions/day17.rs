@@ -13,7 +13,6 @@ fn solve_part_1(input: impl Lines) -> String {
     let mut results = vec![];
 
     loop {
-        println!("{computer:?}");
         match step(&mut computer) {
             StepResult::None => {}
             StepResult::Output(i) => {
@@ -31,14 +30,20 @@ fn solve_part_1(input: impl Lines) -> String {
 fn solve_part_2(input: impl Lines) -> i64 {
     let mut computer = parse(&input);
 
-    for a in 0..200_000 {
+    for a in 0.. {
+        if a % 1_000_000 == 0 {
+            println!("a: {a}");
+        }
+
         computer.state = State {
             a,
             b: 0,
             c: 0,
             ip: 0,
         };
+
         let mut results = vec![];
+        let mut terminated = false;
         for _ in 0..100_000_000 {
             match step(&mut computer) {
                 StepResult::None => {}
@@ -46,13 +51,16 @@ fn solve_part_2(input: impl Lines) -> i64 {
                     results.push(i);
                 }
                 StepResult::Halt => {
+                    terminated = true;
                     break;
                 }
             }
         }
-        if a == 117440 {
-            println!("{results:?}");
+
+        if !terminated {
+            println!("iteration limit")
         }
+
         if results == computer.program {
             return a;
         }
@@ -152,7 +160,7 @@ fn combo(op: i64, state: &State) -> i64 {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Eq, PartialEq, Copy, Clone, Hash)]
 struct State {
     ip: usize,
     a: i64,
@@ -241,6 +249,6 @@ Program: 0,3,5,4,3,0";
 
     #[test]
     fn test_part_2() {
-        aoc_test!(DAY, 2, 117440, TEST_INPUT);
+        aoc_test!(DAY, 2, 117440, TEST_INPUT_2);
     }
 }
