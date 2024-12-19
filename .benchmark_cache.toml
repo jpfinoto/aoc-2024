@@ -383,6 +383,18 @@ secs = 0
 nanos = 6851278
 
 [[benchmarks]]
+day = 17
+part = 1
+
+[benchmarks.result]
+iterations = 6288
+peak_memory = 320
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 2253
+
+[[benchmarks]]
 day = 18
 part = 1
 
@@ -405,3 +417,15 @@ peak_memory = 358528
 [benchmarks.result.average_duration]
 secs = 0
 nanos = 2743999
+
+[[benchmarks]]
+day = 19
+part = 1
+
+[benchmarks.result]
+iterations = 1253
+peak_memory = 519141
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 3645498

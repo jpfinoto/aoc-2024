@@ -6,7 +6,7 @@ use regex::Regex;
 
 const DAY: Day = 17;
 
-solution!(DAY, solve_part_1, solve_part_2);
+solution!(DAY, solve_part_1);
 
 fn solve_part_1(input: impl Lines) -> String {
     let mut computer = parse(&input);

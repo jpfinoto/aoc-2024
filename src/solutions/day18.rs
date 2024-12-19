@@ -86,7 +86,6 @@ fn parse(input: &str) -> Vec<XY> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::aoc_test;
 
     const TEST_INPUT: &str = "
 
