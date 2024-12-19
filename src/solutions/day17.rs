@@ -27,6 +27,7 @@ fn solve_part_1(input: impl Lines) -> String {
     results.iter().join(",")
 }
 
+#[allow(unused)]
 fn solve_part_2(input: impl Lines) -> i64 {
     let mut computer = parse(&input);
 

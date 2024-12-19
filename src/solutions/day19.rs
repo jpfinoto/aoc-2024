@@ -2,68 +2,70 @@ use crate::aoc::*;
 use crate::solution;
 use itertools::Itertools;
 use regex::Regex;
-use std::collections::HashMap;
+use smol_str::SmolStr;
+use std::collections::{HashMap, HashSet};
 
 const DAY: Day = 19;
 
-solution!(DAY, solve_part_1);
+solution!(DAY, solve_part_1, solve_part_2);
 
 fn solve_part_1(input: impl Lines) -> usize {
     let (patterns, designs) = parse(&input);
-    let regex = Regex::new(&format!("^({})+$", patterns.join("|"))).unwrap();
+    let regex = build_regex(&patterns);
     designs.filter(|line| regex.is_match(line)).count()
 }
 
 fn solve_part_2(input: impl Lines) -> usize {
     let (patterns, designs) = parse(&input);
-    let mut combinations = HashMap::new();
-    for pattern in patterns.into_iter().sorted_by_key(String::len) {
-        let n = combinations_for_string(&pattern, &mut combinations).unwrap_or(0) + 1;
-        combinations.insert(pattern.clone(), n);
-    }
-
-    println!("{:?}", combinations);
+    let regex = build_regex(&patterns);
+    let mut cache = HashMap::new();
 
     designs
-        .filter_map(|s| combinations_for_string(s, &mut combinations))
-        .sum()
+        .filter(|line| regex.is_match(line))
+        .map(|line| combinations(line, &patterns, &mut cache))
+        .sum::<usize>()
 }
 
-fn combinations_for_string(s: &str, blocks: &mut HashMap<String, usize>) -> Option<usize> {
-    if let Some(count) = blocks.get(s) {
-        return Some(*count);
+fn combinations(s: &str, options: &HashSet<SmolStr>, cache: &mut HashMap<SmolStr, usize>) -> usize {
+    if s.is_empty() {
+        return 1;
     }
 
-    let mut head = "";
-    let mut tail = s;
-    let mut count = 1;
-    'outer: while !tail.is_empty() {
-        if !head.is_empty() {
-            blocks.insert(head.to_string(), count);
-        }
-        let blocks_sorted = blocks.keys().sorted_by_key(|k| -(k.len() as i32));
-        for block in blocks_sorted {
-            if tail.starts_with(block) {
-                count *= blocks[block];
-                head = &s[..head.len() + block.len()];
-                tail = &tail[block.len()..];
-                continue 'outer;
+    if let Some(&count) = cache.get(s) {
+        return count;
+    }
+
+    let total = options
+        .iter()
+        .map(|part| {
+            if s.starts_with(part.as_str()) {
+                combinations(&s[part.len()..], options, cache)
+            } else {
+                0
             }
-        }
-        return None;
+        })
+        .sum();
+
+    if total != 0 {
+        cache.insert(s.into(), total);
     }
-    blocks.insert(s.to_string(), count);
-    Some(count)
+
+    total
 }
 
-fn parse(input: &impl Lines) -> (Vec<String>, impl Iterator<Item = &str>) {
+fn build_regex(patterns: &HashSet<SmolStr>) -> Regex {
+    Regex::new(&format!("^({})+$", patterns.iter().sorted().join("|"))).unwrap()
+}
+
+fn parse(input: &impl Lines) -> (HashSet<SmolStr>, impl Iterator<Item = &str>) {
     let mut lines = input.get_lines();
     let patterns = lines
         .next()
         .unwrap()
         .split(", ")
-        .map(String::from)
+        .map(SmolStr::from)
         .collect();
+
     assert!(lines.next().unwrap().trim().is_empty());
 
     (patterns, lines)
@@ -85,6 +87,10 @@ bwurrg
 brgr
 bbrgwb";
 
+    const TEST_INPUT_2: &str = "r, b, br
+
+brrrrrrrrrrrrbr";
+
     #[test]
     fn test_part_1() {
         aoc_test!(DAY, 1, 6, TEST_INPUT);
@@ -92,6 +98,11 @@ bbrgwb";
 
     #[test]
     fn test_part_2() {
-        aoc_test!(DAY, 2, 0, TEST_INPUT);
+        aoc_test!(DAY, 2, 16, TEST_INPUT);
+    }
+
+    #[test]
+    fn test_part_2b() {
+        aoc_test!(DAY, 2, 16, TEST_INPUT_2);
     }
 }
