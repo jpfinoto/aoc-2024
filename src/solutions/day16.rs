@@ -85,14 +85,14 @@ struct Node {
 }
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
-enum Tile {
+pub enum Tile {
     Wall,
     Start,
     End,
     Empty,
 }
 
-fn parse(input: &impl Lines) -> DenseGrid<Tile> {
+pub fn parse(input: &impl Lines) -> DenseGrid<Tile> {
     let width = input.get_lines().next().unwrap().len();
     DenseGrid::from_iter(
         width,
