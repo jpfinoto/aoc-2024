@@ -8,7 +8,7 @@ An overcomplicated setup for getting inputs and benchmarking the solutions!
 
 Benchmark CPU: **AMD Ryzen 9 7950X3D 16-Core Processor**
 
-`|#####################################-------------| 37/50 stars`
+`|#######################################-----------| 39/50 stars`
 
 | Day                          | Part 1              | Part 2              |
 |------------------------------|---------------------|---------------------|
@@ -33,7 +33,7 @@ Benchmark CPU: **AMD Ryzen 9 7950X3D 16-Core Processor**
 | [19](src/solutions/day19.rs) | 1.2ms / 504 KiB     | 22.9ms / 1 MiB      |
 | 20                           | -                   | -                   |
 | 21                           | -                   | -                   |
-| 22                           | -                   | -                   |
+| [22](src/solutions/day22.rs) | 15.3ms / 11 bytes   | 578.5ms / 133 MiB   |
 | 23                           | -                   | -                   |
 | 24                           | -                   | -                   |
 | 25                           | -                   | -                   |
