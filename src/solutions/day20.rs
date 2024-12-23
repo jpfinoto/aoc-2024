@@ -1,3 +1,4 @@
+#![allow(unused)]
 use crate::aoc::*;
 use crate::solution;
 use crate::solutions::day16;
@@ -11,7 +12,7 @@ use std::iter;
 
 const DAY: Day = 20;
 
-solution!(DAY, solve_part_1, solve_part_2);
+solution!(DAY, solve_part_1);
 
 fn solve_part_1(input: impl Lines) -> usize {
     let grid = day16::parse(&input);
@@ -52,29 +53,9 @@ fn solve_part_1(input: impl Lines) -> usize {
 
 fn solve_part_2(input: impl Lines) -> usize {
     let grid = day16::parse(&input);
-    let start_pos = grid.find(&Tile::Start).exactly_one().ok().unwrap();
-    let end_pos = grid.find(&Tile::End).exactly_one().ok().unwrap();
-    let (_, initial_cost) = find_shortest_path(&grid, start_pos, end_pos);
+    get_shortcuts(&grid, 2).for_each(|(cheat, time_save)| println!("{cheat:?} saves {time_save}"));
 
-    let goals = solve(
-        Node {
-            pos: start_pos,
-            cheat: Cheat::Available,
-        },
-        successors_factory(&grid, i64::MAX, 20),
-        |node| node.pos == end_pos,
-    );
-
-    let mapped = goals
-        .iter()
-        .map(|(node, cost)| (*cost, *node))
-        .into_group_map();
-
-    for (cost, nodes) in mapped.iter().sorted_by_key(|(time_save, _)| -**time_save) {
-        println!("Reached: {} saving {}", nodes.len(), initial_cost - cost);
-    }
-
-    goals.len()
+    0
 }
 
 fn solve<FN, FS, IN>(start: Node, successors: FN, success: FS) -> Vec<(Node, i64)>
@@ -106,52 +87,54 @@ where
     goals
 }
 
-fn successors_factory<'a>(
-    grid: &'a DenseGrid<Tile>,
-    max_cost: i64,
-    max_cheating: usize,
-) -> impl Fn(&Node, i64) -> Vec<(Node, i64)> + use<'a> {
-    move |node, cost| {
-        if cost > max_cost {
-            return vec![];
-        }
-        node.pos
-            .cardinal_neighbours()
-            .filter_map(
-                |next_pos| match (grid.at(next_pos.as_tuple()), node.cheat) {
-                    (None, _) => None,
-                    (_, Cheat::Active { remaining, .. }) if remaining == 0 => None,
-                    (Some(Tile::Wall), Cheat::Available) => Some(Node {
-                        pos: next_pos,
-                        cheat: Cheat::Active {
-                            start: next_pos,
-                            remaining: max_cheating,
-                        },
-                    }),
-                    (Some(Tile::Wall), Cheat::Active { start, remaining }) => Some(Node {
-                        pos: next_pos,
-                        cheat: Cheat::Active {
-                            start,
-                            remaining: remaining - 1,
-                        },
-                    }),
-                    (Some(Tile::Wall), _) => None,
-                    (Some(_), Cheat::Active { start, .. }) => Some(Node {
-                        pos: next_pos,
-                        cheat: Cheat::Used {
-                            start,
-                            end: next_pos,
-                        },
-                    }),
-                    (Some(_), cheat) => Some(Node {
-                        pos: next_pos,
-                        cheat,
-                    }),
-                },
+fn get_shortcuts(
+    grid: &DenseGrid<Tile>,
+    max_length: usize,
+) -> impl Iterator<Item = (SimpleCheat, i64)> + use<'_> {
+    let start_pos = grid.find(&Tile::Start).exactly_one().ok().unwrap();
+    let end_pos = grid.find(&Tile::End).exactly_one().ok().unwrap();
+    let (path, _) = find_shortest_path(grid, start_pos, end_pos);
+    println!("{path:?}");
+    path.clone()
+        .into_iter()
+        .permutations(2)
+        .inspect(|p| println!("{p:?}"))
+        .filter_map(move |p| {
+            let [a, b] = p.try_into().unwrap();
+            let (cost_a, _) = path.iter().find_position(|x| **x == a).unwrap();
+            let (cost_b, _) = path.iter().find_position(|x| **x == b).unwrap();
+            if cost_b <= cost_a {
+                println!("invalid order: {cost_a} {cost_b}");
+                return None;
+            }
+            let dt = (cost_b as i64) - (cost_a as i64);
+            println!("dt: {dt}");
+            pathfinding::directed::dijkstra::dijkstra(
+                &a,
+                |p| wall_successors(grid, *p, end_pos),
+                |p| *p == b,
             )
-            .map(|node| (node, cost + 1))
-            .collect()
-    }
+            .inspect(|p| println!("{p:?}"))
+            .and_then(|(_, cost)| {
+                if cost > dt {
+                    println!("doesn't save time");
+                    None
+                } else if cost > max_length as i64 {
+                    println!("path is too long {cost}");
+                    None
+                } else {
+                    println!("saves {}", dt - cost);
+                    Some((SimpleCheat(a, b), dt - cost))
+                }
+            })
+        })
+}
+
+fn wall_successors(grid: &DenseGrid<Tile>, pos: XY, target: XY) -> Vec<(XY, i64)> {
+    pos.cardinal_neighbours()
+        .filter(|p| *p == target || grid.at(p.as_tuple()) == Some(&Tile::Wall))
+        .zip(iter::repeat(1))
+        .collect()
 }
 
 fn find_shortest_path(grid: &DenseGrid<Tile>, start_pos: XY, end_pos: XY) -> (Vec<XY>, i64) {

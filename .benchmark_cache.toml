@@ -443,6 +443,18 @@ secs = 0
 nanos = 22893136
 
 [[benchmarks]]
+day = 20
+part = 1
+
+[benchmarks.result]
+iterations = 6
+peak_memory = 23315440
+
+[benchmarks.result.average_duration]
+secs = 0
+nanos = 683403033
+
+[[benchmarks]]
 day = 22
 part = 1
 
